@@ -1,7 +1,14 @@
 <nb-card>
   <nb-card-header class="d-flex justify-content-between align-items-center">
-    <h5>Add Category</h5>
-    <button nbButton outline status="success" type="submit" (click)="editSubCategory()" [disabled]="!form.valid">
+    <h5>Edit Category</h5>
+    <button
+      nbButton
+      outline
+      status="success"
+      type="submit"
+      (click)="editSubCategory()"
+      [disabled]="!form.valid"
+    >
       Update
     </button>
   </nb-card-header>
@@ -9,25 +16,43 @@
     <form [formGroup]="form">
       <div class="form-group mt-2">
         <label for="categoryName" class="label">Sub Category Name</label>
-        <input type="text" nbInput fullWidth class="form-control" name="categoryName" id="categoryName"
-          formControlName="name">
+        <input
+          type="text"
+          nbInput
+          fullWidth
+          class="form-control"
+          name="categoryName"
+          id="categoryName"
+          formControlName="name"
+        />
       </div>
 
       <!--? error Message --->
-      <div *ngIf="Name.invalid && ( Name.dirty || Name.touched)">
-        <nb-alert *ngIf="Name.errors.required" class="error-message">*Category name is required!</nb-alert>
-        <nb-alert *ngIf="Name.errors.minlength" class="error-message">*Category Name should be at least
-          {{Name.errors.minlength.requiredLength}} Character </nb-alert>
+      <div *ngIf="Name.invalid && (Name.dirty || Name.touched)">
+        <nb-alert *ngIf="Name.errors.required" class="error-message"
+          >*Category name is required!</nb-alert
+        >
+        <nb-alert *ngIf="Name.errors.minlength" class="error-message"
+          >*Category Name should be at least
+          {{ Name.errors.minlength.requiredLength }} Character
+        </nb-alert>
 
         <nb-alert *ngIf="Name.errors.maxlength" class="error-message">
-          *Category Name should be at most {{Name.errors.maxlength.requiredLength}} Character
+          *Category Name should be at most
+          {{ Name.errors.maxlength.requiredLength }} Character
         </nb-alert>
       </div>
       <!--? error Message --->
 
-
-      <button nbButton status="info" (click)="upload.click()">Add Image
-        <input type="file" #upload hidden formControlName="image" (change)="onImageSelected($event)">
+      <button nbButton status="info" (click)="upload.click()">
+        Add Image
+        <input
+          type="file"
+          #upload
+          hidden
+          formControlName="image"
+          (change)="onImageSelected($event)"
+        />
       </button>
     </form>
   </nb-card-body>

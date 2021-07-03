@@ -57,7 +57,7 @@ export class CategoryService {
 
   updateCategory(id, _category) {
     let headers = this.tokenService.getAdminToken();
-    this.http.put(this.url, _category, { headers }).subscribe(
+    this.http.put(this.url + "/" + id, _category, { headers }).subscribe(
       () => {
         this.showToast("success", "Added successfully", "");
         this.router.navigate(["/admin/categories/manage"]);

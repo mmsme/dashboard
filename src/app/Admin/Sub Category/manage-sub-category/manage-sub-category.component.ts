@@ -82,6 +82,8 @@ export class ManageSubCategoryComponent implements OnInit {
     this.subCategoryServices
       .getUpdatedSubCategory()
       .subscribe((_subcategories) => {
+        console.log(_subcategories);
+
         this.source.load(_subcategories);
       });
   }

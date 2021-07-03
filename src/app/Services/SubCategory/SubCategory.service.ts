@@ -34,6 +34,7 @@ export class SubCategoryService {
     this.categoryServices
       .getCategoriesUpdatedHandler()
       .subscribe((_categories) => {
+        this.subCategories = [];
         _categories.forEach((category: Category) => {
           this.subCategories = this.subCategories.concat([
             ...category.subCategories,
@@ -86,7 +87,9 @@ export class SubCategoryService {
 
     this.http.delete(this.url + "/" + id, { headers }).subscribe(
       () => {
-        let _update = this.subCategories.filter((c) => c.categoryId != id);
+        let _update = this.subCategories.filter(
+          (c: SubCategory) => c.subCategoryId != id
+        );
         this.subCategories = [..._update];
         this.updatedSubCategories.next([...this.subCategories]);
         this.showToast("success", "Delete successfully", "");
