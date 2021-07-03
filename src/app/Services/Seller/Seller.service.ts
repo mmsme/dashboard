@@ -19,6 +19,8 @@ export class SellerService {
   private waitingSellersUpdated = new Subject<Seller[]>();
   private activeSellers: Seller[];
   private activeSellerUpdate = new Subject<Seller[]>();
+  private sellerProfile: Seller;
+  private sellerInfo = new Subject<Seller>();
 
   constructor(
     private http: HttpClient,
@@ -112,19 +114,40 @@ export class SellerService {
   }
 
   /* --------------------------------- profile -------------------------------- */
-  getSellerProfile(id) {
-    let headers = this._tokenProvider.getAdminToken();
-    return this.http.get(this.url + "/" + id, { headers });
+  getSellerProfile() {
+    let headers = this._tokenProvider.getSellerToken();
+    this.http.get<Seller>(this.url, { headers }).subscribe(
+      (data) => {
+        this.sellerProfile = data;
+        this.sellerInfo.next(data);
+      },
+      () => {
+        this.showToast("danger", "Check internet", "");
+      }
+    );
+  }
+
+  getSellerInfoUpdates() {
+    return this.sellerInfo.asObservable();
   }
 
   /* ---------------------------------- edit ---------------------------------- */
-  updateSeller(id, seller: Seller) {
-    let headers = this._tokenProvider.getAdminToken();
-    this.http
-      .put(this.url + "/" + id, seller, { headers })
-      .subscribe((data) => {
-        console.log(data);
-      });
+  updateSeller(data) {
+    let headers = this._tokenProvider.getSellerToken();
+    this.http.put(this.url, data, { headers }).subscribe(
+      () => {
+        this.showToast("success", "updated", "");
+        this.sellerProfile.applicationUser.fname = data.fname;
+        this.sellerProfile.applicationUser.lname = data.lname;
+        this.sellerProfile.applicationUser.email = data.email;
+        this.sellerProfile.applicationUser.address = data.address;
+        this.sellerProfile.applicationUser.phoneNumber = data.phoneNumber;
+        this.sellerInfo.next(this.sellerProfile);
+      },
+      () => {
+        this.showToast("danger", "Check internet", "");
+      }
+    );
   }
 
   /**========================================================================

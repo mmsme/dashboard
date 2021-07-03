@@ -93,6 +93,7 @@ export class UpdateProductComponent implements OnInit {
         console.log(this.product);
 
         this.form.patchValue(this.product);
+        this.Stock.value = this.product.inventoryProducts[0].quantity;
 
         if (this.product.rangeDate) {
           let dateString = this.product.rangeDate.split(",");

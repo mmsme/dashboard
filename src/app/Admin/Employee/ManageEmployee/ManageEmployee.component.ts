@@ -90,7 +90,7 @@ export class ManageEmployeeComponent implements OnInit {
           return data.map((e: Employee) => {
             return {
               id: e.employeeId,
-              fullName: e.applicationUser.fname + e.applicationUser.lname,
+              fullName: e.applicationUser.fname + " " + e.applicationUser.lname,
               email: e.applicationUser.email,
               address: e.applicationUser.address,
               salary: e.salary,

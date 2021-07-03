@@ -47,18 +47,18 @@ export const Seller_Menu: NbMenuItem[] = [
       },
     ],
   },
-  {
-    title: "Promotions",
-    icon: "tv-outline",
-    link: "seller",
-    home: true,
-    children: [
-      {
-        title: "Promotions",
-        link: "/seller/promotion",
-      },
-    ],
-  },
+  // {
+  //   title: "Promotions",
+  //   icon: "tv-outline",
+  //   link: "seller",
+  //   home: true,
+  //   children: [
+  //     {
+  //       title: "Promotions",
+  //       link: "/seller/promotion",
+  //     },
+  //   ],
+  // },
   // {
   //   title: "Reports",
   //   icon: "file-text-outline",

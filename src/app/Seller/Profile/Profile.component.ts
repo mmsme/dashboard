@@ -45,8 +45,13 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    const id = this.tokenServ.getSellerID();
-    this.sellerServ.getSellerProfile(id).subscribe((_seller: Seller) => {
+    // this.sellerServ.getSellerProfile().((_seller: Seller) => {
+    //   this.seller = _seller;
+    //   this.form.patchValue(this.seller.applicationUser);
+    // });
+
+    this.sellerServ.getSellerProfile();
+    this.sellerServ.getSellerInfoUpdates().subscribe((_seller: any) => {
       this.seller = _seller;
       this.form.patchValue(this.seller.applicationUser);
     });
@@ -73,11 +78,13 @@ export class ProfileComponent implements OnInit {
   }
 
   save() {
-    this.seller.applicationUser.fname = this.Fname.value;
-    this.seller.applicationUser.lname = this.Lname.value;
-    this.seller.applicationUser.email = this.Email.value;
-    this.seller.applicationUser.address = this.Address.value;
-    this.seller.applicationUser.phoneNumber = this.PhoneNumber.value;
-    this.sellerServ.updateSeller(this.seller.sellerId, this.seller);
+    let data = {
+      fname: this.Fname.value,
+      lname: this.Lname.value,
+      email: this.Email.value,
+      address: this.Address.value,
+      phoneNumber: this.PhoneNumber.value,
+    };
+    this.sellerServ.updateSeller(data);
   }
 }

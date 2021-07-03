@@ -56,7 +56,7 @@ export class AddEmployeeComponent implements OnInit {
   }
 
   public get Address(): any {
-    return this.form.get("lname");
+    return this.form.get("address");
   }
 
   public get Email(): any {

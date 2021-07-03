@@ -64,13 +64,11 @@ export class ManageProductsComponent implements OnInit {
           return price + "$";
         },
       },
-      quantity: {
+      inventoryProducts: {
         title: "Quantity",
         type: "number",
-        valuePrepareFunction: (quantity) => {
-          console.log(quantity);
-
-          return quantity + " unit";
+        valuePrepareFunction: (data) => {
+          return data[0].quantity + " unit";
         },
       },
       discount: {

@@ -12,7 +12,9 @@
             }}
           </div>
           <div>
-            {{ "@" + seller?.applicationUser.userName || "@userName" }}
+            {{
+              "@" + seller?.applicationUser.email.split("@")[0] || "@userName"
+            }}
           </div>
           <div class="list-group mt-2">
             <!-- -------------------------------- email -------------------------------- -->

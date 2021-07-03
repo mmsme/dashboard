@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { User } from "../@core/data/users";
+import { SellerService } from "../Services/Seller/Seller.service";
 import { Seller_Menu } from "./seller_menu";
 
 @Component({
@@ -16,7 +17,13 @@ export class SellerComponent implements OnInit {
 
   title = "Seller";
 
-  constructor() {}
+  constructor(private sellerServ: SellerService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.sellerServ.getSellerProfile();
+    this.sellerServ.getSellerInfoUpdates().subscribe((data) => {
+      this.user.name =
+        data.applicationUser.fname + " " + data.applicationUser.lname;
+    });
+  }
 }
