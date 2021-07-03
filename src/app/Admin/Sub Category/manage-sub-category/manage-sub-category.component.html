@@ -1,0 +1,10 @@
+<nb-card>
+  <nb-card-header class="d-flex justify-content-between align-items-center">
+    <h5>Sub Categories</h5>
+    <button nbButton status="success" outline (click)="add()">ADD</button>
+  </nb-card-header>
+  <nb-card-body>
+    <ng2-smart-table [settings]="settings" [source]="source" (editConfirm)="onEditConfirm($event)"
+      (deleteConfirm)="onDeleteConfirm($event)">
+    </ng2-smart-table>
+  </nb-card-body>

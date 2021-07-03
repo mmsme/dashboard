@@ -1,0 +1,73 @@
+<nb-card>
+  <nb-card-header>
+    <h5>{{ isEdit == false ? "Add Governorate" : "Edit Governorate" }}</h5>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="container mt-3 mb-3 col-12 col-md-8">
+      <form class="m-3" [formGroup]="form">
+        <div class="form-group">
+          <label class="label" for="governorateName">Governorate Name</label>
+          <input nbInput fullWidth type="text" class="form-control" name="governorateName" id="governorateName"
+            placeholder="Governorate Name" formControlName="governorateName">
+        </div>
+
+        <!--? error Message --->
+        <div *ngIf="GovernorateName.invalid && (GovernorateName.dirty || GovernorateName.touched)">
+          <nb-alert *ngIf="GovernorateName.errors.required" class="error-message">*Governorate name is required!
+          </nb-alert>
+          <nb-alert *ngIf="GovernorateName.errors.minlength" class="error-message">*Governorate name should be at least
+            {{ GovernorateName.errors.minlength.requiredLength }} Character
+          </nb-alert>
+          <nb-alert *ngIf="GovernorateName.errors.maxlength" class="error-message">
+            *Governorate name should be at most
+            {{ GovernorateName.errors.maxlength.requiredLength }} Character
+          </nb-alert>
+        </div>
+        <!--? error Message --->
+
+
+        <div class="form-group">
+          <label class="label" for="duration">duration</label>
+          <input nbInput fullWidth type="number" name="duration" id="duration" class="form-control"
+            placeholder="Duration" formControlName="duration">
+        </div>
+
+        <!--? error Message --->
+        <div *ngIf="Duration.invalid && (Duration.dirty || Duration.touched)">
+          <nb-alert *ngIf="Duration.errors.required" class="error-message">*duration is required!
+          </nb-alert>
+          <nb-alert *ngIf="Duration.errors.min" class="error-message">*duration should be at least 1 day
+          </nb-alert>
+          <nb-alert *ngIf="Duration.errors.max" class="error-message">
+            *duration should be at most 10 day
+          </nb-alert>
+        </div>
+        <!--? error Message --->
+
+        <div class="form-group">
+          <label class="label" for="shippingValue">Shipping Value</label>
+          <input nbInput fullWidth type="number" class="form-control" name="shippingValue" id="shippingValue"
+            placeholder="Shipping Value" formControlName="shippingValue">
+        </div>
+
+        <!--? error Message --->
+        <div *ngIf="ShippingValue.invalid && (ShippingValue.dirty || ShippingValue.touched)">
+          <nb-alert *ngIf="ShippingValue.errors.required" class="error-message">*Shipping value is required!
+          </nb-alert>
+          <nb-alert *ngIf="ShippingValue.errors.min" class="error-message">*Shipping value should be at least 100
+          </nb-alert>
+          <nb-alert *ngIf="ShippingValue.errors.max" class="error-message">
+            *Shipping value should be at most 3000
+          </nb-alert>
+        </div>
+        <!--? error Message --->
+
+
+        <button type="submit" class="mt-2" nbButton status="success" fullWidth [disabled]="!form.valid"
+          (click)="!isEdit? add():edit()">
+          {{ isEdit == false ? "Add" : "Update" }}
+        </button>
+      </form>
+    </div>
+  </nb-card-body>
+</nb-card>

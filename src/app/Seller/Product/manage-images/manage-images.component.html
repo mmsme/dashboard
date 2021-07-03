@@ -1,0 +1,37 @@
+<div class="d-flex justify-content-center">
+    <h3>All Products</h3>
+</div>
+
+<div class="cover m-auto mt-3" *ngIf="products.length == 0">
+    <img src="assets/images/empty.svg" class="img-fluid" alt="">
+</div>
+
+<div class="accordion-container" *ngIf="products.length != 0">
+    <nb-accordion multi>
+        <nb-accordion-item *ngFor="let prod of products; let productIndex=index">
+            <nb-accordion-item-header>
+                {{prod.productName}}
+                <span class="badge ml-3" [ngClass]="{'badge-success': prod.active, 'badge-warning': !prod.active}">
+                    {{showState(prod.active)}}
+                </span>
+            </nb-accordion-item-header>
+            <nb-accordion-item-body>
+                <nb-list>
+                    <nb-list-item *ngFor="let img of prod.productImages; let imgIndex=index"
+                        class="d-flex justify-content-between align-items-center">
+                        <div class="img-view d-flex align-items-center justify-content-center">
+                            <img [src]="img.image" class="p-img" alt="{{prod.productName}}">
+                        </div>
+
+                        <nb-actions size="small">
+                            <nb-action icon="edit-outline" (click)="upload.click()">
+                                <input type="file" hidden #upload (change)="onEdit($event,productIndex, imgIndex)">
+                            </nb-action>
+                            <nb-action icon="trash-2-outline" (click)="onRemove(productIndex, imgIndex)"></nb-action>
+                        </nb-actions>
+                    </nb-list-item>
+                </nb-list>
+            </nb-accordion-item-body>
+        </nb-accordion-item>
+    </nb-accordion>
+</div>

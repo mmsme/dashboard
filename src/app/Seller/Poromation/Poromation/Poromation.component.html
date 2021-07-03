@@ -1,0 +1,119 @@
+<nb-card>
+  <nb-card-header>
+    <div class="d-flex justify-content-between align-items-center">
+      <div>
+        Promotions
+      </div>
+      <div>
+        <button nbButton outline status="success" (click)="openForm(addForm, 'Add Promotion')">Add</button>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body>
+    <table class="table table-inverse w-100">
+      <thead>
+        <tr>
+          <th>Image</th>
+          <th>Description</th>
+          <th>Discount</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- --------------------------- no data message --------------------------- -->
+        <tr *ngIf="promotions.length == 0">
+          <td colspan="5" class="text-center">
+            <h5 class="mb-5">There is no promotions to show</h5>
+            <img src="assets/images/empty.svg" class="img-fluid w-25" alt="">
+          </td>
+        </tr>
+      </tbody>
+
+      <!-- ------------------------------ show data ------------------------------ -->
+      <tbody *ngIf="promotions.length > 0">
+        <tr *ngFor="let item of promotions; let i=index">
+          <td scope="row">
+            <div class="img-preview" [style.backgroundImage]="'url('+item.Image+')'"></div>
+          </td>
+          <td>{{item.Description || "no description"}}</td>
+          <td>{{item.Discount}}</td>
+          <td [ngClass]="{
+            'text-warning': item?.Status == 'pending', 
+            'text-success': item?.Status == 'approved',
+            'text-danger': item?.Status == 'rejected'
+          }">
+            <i class="fas fa-circle"></i>
+            <label class="label ml-2">{{item?.Status}}</label>
+          </td>
+          <td class="d-flex justify-content-end">
+            <nb-actions size="small">
+              <nb-action icon="edit-outline"
+                (click)="selectedPromotion = item; selectedImage = item.Image;openForm(editForm, 'Edit Promotion')">
+              </nb-action>
+              <nb-action icon="trash-2-outline" (click)="delete(item.Id)"></nb-action>
+            </nb-actions>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </nb-card-body>
+</nb-card>
+
+
+<!-- ------------------------------ add form ------------------------------- -->
+<ng-template #addForm>
+  <form>
+    <label for="product" class="label">Products <span class="text-success">(optional)</span></label>
+    <nb-select id="product" fullWidth selected="0" #product>
+      <nb-option *ngFor="let product of Products; let i = index" value="{{i}}">{{product.ProductName}}</nb-option>
+    </nb-select>
+
+    <div class="form-group mt-3">
+      <label for="description" class="label">Description <span class="text-success">(optional)</span></label>
+      <textarea class="form-control" name="description" id="description" rows="3" #desc></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="discount" class="label">Discount <span class="text-success">(optional)</span></label>
+      <input type="number" class="form-control" name="discount" #discount placeholder="discount" min="0" max="90">
+    </div>
+
+
+    <button nbButton fullWidth (click)="upload.click()">Upload Image
+      <input type="file" hidden #upload (change)="onFileSelected($event)">
+    </button>
+    <hr>
+    <button type="submit" nbButton status="success" fullWidth [disabled]="this.selectedImage == null"
+      (click)="add(Products[product.selected], desc.value, discount.value)">Add</button>
+  </form>
+</ng-template>
+
+<!-- ------------------------------ edit form ------------------------------ -->
+
+<ng-template #editForm>
+  <form>
+    <label class="label">Current Image</label>
+    <div class="img-preview" [style.backgroundImage]="'url('+this.selectedImage+')'">
+    </div>
+
+    <div class="form-group mt-3">
+      <label for="description" class="label">Description <span class="text-success">(optional)</span></label>
+      <textarea class="form-control" name="description" #editDesc [defaultValue]="selectedPromotion.Description"
+        rows="3"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="discount" class="label">Discount <span class="text-success">(optional)</span></label>
+      <input type="number" [defaultValue]="selectedPromotion.Discount" class="form-control" name="discount"
+        #editDiscount placeholder="discount" min="0" max="90">
+    </div>
+
+    <button nbButton fullWidth (click)="upload.click()">Upload Image
+      <input type="file" hidden #upload (change)="onFileSelected($event)">
+    </button>
+    <hr>
+    <button nbButton status="success" fullWidth [disabled]="this.selectedImage == null"
+      (click)="edit(editDesc.value, editDiscount.value)">edit</button>
+  </form>
+</ng-template>

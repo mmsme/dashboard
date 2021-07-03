@@ -1,0 +1,494 @@
+<nb-card class="col-md-12 col-lg-12 col-xxxl-12">
+  <nb-card-body>
+    <nb-stepper orientation="horizontal" disableStepNavigation>
+      <!--? ------------------------------ Category Section ------------------------------- -->
+
+      <nb-step #stepper [label]="steps[0]" [stepControl]="categoryForm">
+        <form [formGroup]="categoryForm">
+          <label for="inventory" class="ml-2">Inventory</label>
+          <nb-select id="inventory" formControlName="inventory" fullWidth>
+            <nb-option
+              *ngFor="let inventory of inventories"
+              value="{{ inventory.inventoryId }}"
+            >
+              {{ inventory.street + ", " + inventory.city }}
+            </nb-option>
+          </nb-select>
+
+          <label for="main-categroy" class="ml-2 mt-3">Category</label>
+          <nb-select
+            id="main-categroy"
+            fullWidth
+            formControlName="mainCategory"
+            (selectedChange)="changeCategory($event)"
+          >
+            <nb-option
+              *ngFor="let category of categories"
+              value="{{ category.categoryId }}"
+              >{{ category.name }}
+            </nb-option>
+          </nb-select>
+
+          <div
+            *ngIf="
+              MainCategory.invalid && (ProductName.dirty || ProductName.touched)
+            "
+          >
+            <nb-alert class="error-message"
+              >*Main Category is required!!</nb-alert
+            >
+          </div>
+
+          <div *ngIf="MainCategory.valid" class="mt-3 mb-2">
+            <label for="sub-category" class="ml-2">Sub Category</label>
+            <nb-select
+              id="sub-category"
+              fullWidth
+              formControlName="subCategory"
+            >
+              <nb-option
+                *ngFor="let sub of selectedCategory.subCategories"
+                value="{{ sub.subCategoryId }}"
+                >{{ sub.name }}
+              </nb-option>
+            </nb-select>
+          </div>
+        </form>
+
+        <div class="d-flex justify-content-center">
+          <button nbButton disabled nbStepperNext>prev</button>
+          <button nbButton nbStepperNext>next</button>
+        </div>
+      </nb-step>
+      <!-- ----------------------- end of Category Section ----------------------- -->
+
+      <!--? ------------------------ Product Info Section ------------------------- -->
+      <nb-step [label]="steps[1]" [stepControl]="productInfoForm">
+        <!-- ---------------------------- product name ----------------------------- -->
+        <form action="post" [formGroup]="productInfoForm">
+          <div class="form-group">
+            <label for="productName">Product name</label>
+            <input
+              formControlName="productName"
+              type="text"
+              nbInput
+              fullWidth
+              id="productName"
+              placeholder="Product Name"
+            />
+          </div>
+
+          <!--? error Message --->
+          <div
+            *ngIf="
+              ProductName.invalid && (ProductName.dirty || ProductName.touched)
+            "
+          >
+            <nb-alert *ngIf="ProductName.errors.required" class="error-message"
+              >*Product name is required!</nb-alert
+            >
+            <nb-alert
+              *ngIf="ProductName.errors.inputIsSpace"
+              class="error-message"
+            >
+              *Product name is invalid!</nb-alert
+            >
+            <nb-alert *ngIf="ProductName.errors.minlength" class="error-message"
+              >*Product Name should be at least
+              {{ ProductName.errors.minlength.requiredLength }} Character
+            </nb-alert>
+
+            <nb-alert
+              *ngIf="ProductName.errors.maxlength"
+              class="error-message"
+            >
+              *Product Name should be at most
+              {{ ProductName.errors.maxlength.requiredLength }} Character
+            </nb-alert>
+          </div>
+          <!--? error Message --->
+
+          <!-- ------------------------- product description ------------------------- -->
+          <div class="form-group">
+            <label for="productDescription">Product Description</label>
+            <textarea
+              formControlName="productDescription"
+              rows="5"
+              nbInput
+              fullWidth
+              placeholder="Product Description"
+            ></textarea>
+          </div>
+
+          <!--? error Message --->
+          <div
+            *ngIf="
+              ProductDescription.invalid &&
+              (ProductDescription.dirty || ProductDescription.touched)
+            "
+          >
+            <nb-alert
+              *ngIf="ProductDescription.errors.required"
+              class="error-message"
+              >*Product description is required!
+            </nb-alert>
+            <nb-alert
+              *ngIf="ProductDescription.errors.inputIsSpace"
+              class="error-message"
+              >*Product description is invalid!</nb-alert
+            >
+            <nb-alert
+              *ngIf="ProductDescription.errors.minlength"
+              class="error-message"
+              >Description should be at least
+              {{ ProductDescription.errors.minlength.requiredLength }} Character
+            </nb-alert>
+
+            <nb-alert
+              *ngIf="ProductDescription.errors.maxlength"
+              class="error-message"
+            >
+              Description should be at most
+              {{ ProductDescription.errors.maxlength.requiredLength }} Character
+            </nb-alert>
+          </div>
+          <!--? error Message --->
+
+          <!-- ----------------------------------------------------------------------- -->
+          <div class="row">
+            <!-- -------------------------------- brand -------------------------------- -->
+            <div class="col-12 col-md-6">
+              <div class="form-group">
+                <label for="brand" class="label">Brand</label>
+                <input
+                  formControlName="brand"
+                  type="text"
+                  nbInput
+                  fullWidth
+                  id="brand"
+                  placeholder="Brand"
+                />
+              </div>
+
+              <!--? error Message --->
+              <div *ngIf="Brand.invalid && (Brand.dirty || Brand.touched)">
+                <nb-alert *ngIf="Brand.errors.required" class="error-message"
+                  >*Brand is required!</nb-alert
+                >
+                <nb-alert
+                  *ngIf="Brand.errors.inputIsSpace"
+                  class="error-message"
+                  >*Brand is invalid!</nb-alert
+                >
+              </div>
+              <!--? error Message --->
+            </div>
+
+            <!-- -------------------------------- color -------------------------------- -->
+            <div class="col-12 col-md-6">
+              <div class="form-group">
+                <label for="color" class="label">Color</label>
+                <div class="d-flex">
+                  <div
+                    *ngFor="let item of Colors; let i = index"
+                    class="colorCircle"
+                    [style.backgroundColor]="item"
+                  >
+                    <span
+                      class="badge badge-pill small-span"
+                      (click)="removeColor(i)"
+                      ><i class="fas fa-times"></i
+                    ></span>
+                  </div>
+                  <button
+                    nbButton
+                    class="add-color-btn"
+                    (click)="openColorPikerWindow(colorPikerPopup)"
+                  >
+                    <i class="fas fa-palette"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ----------------------------------------------------------------------- -->
+
+          <!-- -------------------------------- Size --------------------------------- -->
+          <div class="form-group">
+            <label for="size" class="label">Size</label>
+            <input
+              formControlName="size"
+              type="text"
+              nbInput
+              fullWidth
+              id="size"
+              placeholder="Size"
+            />
+          </div>
+
+          <!--? error Message --->
+          <div *ngIf="Size.invalid && (Size.dirty || Size.touched)">
+            <nb-alert *ngIf="Size.errors.required" class="error-message"
+              >*Size is required!</nb-alert
+            >
+            <nb-alert *ngIf="Size.errors.inputIsSpace" class="error-message"
+              >*Size is invalid!</nb-alert
+            >
+          </div>
+          <!--? error Message --->
+
+          <!-- -------------------------------- stoke -------------------------------- -->
+          <div class="form-group">
+            <label for="stock" class="label">Stock</label>
+            <input
+              type="number"
+              min="1"
+              nbInput
+              fullWidth
+              id="stock"
+              placeholder="Stoke"
+              formControlName="stock"
+            />
+          </div>
+
+          <!--? error Message --->
+          <div *ngIf="Stock.invalid && (Stock.dirty || Stock.touched)">
+            <nb-alert *ngIf="Stock.errors.required" class="error-message"
+              >*Stoke is required!</nb-alert
+            >
+            <nb-alert *ngIf="Stock.errors.min" class="error-message"
+              >*Stoke min value is 1!</nb-alert
+            >
+          </div>
+          <!--? error Message --->
+        </form>
+
+        <div class="d-flex justify-content-center">
+          <button nbButton nbStepperPrevious>prev</button>
+          <button nbButton nbStepperNext>next</button>
+        </div>
+      </nb-step>
+      <!-- ----------------------- End of Product Section ------------------------ -->
+
+      <!--? ------------------------ Product Specification ------------------------ -->
+      <nb-step
+        [label]="steps[2]"
+        [stepControl]="
+          productSpecification == null || productSpecification == ''
+        "
+      >
+        <div>
+          <label for="productSpecification" class="label"
+            >Product Specification</label
+          >
+          <ckeditor
+            id="productSpecification"
+            [config]="{ extraPlugins: 'divarea', height: '320' }"
+            #t
+            (editorChange)="productSpecificationHandler($event)"
+          ></ckeditor>
+        </div>
+        <div class="d-flex justify-content-center">
+          <button nbButton nbStepperPrevious>prev</button>
+          <button nbButton nbStepperNext>next</button>
+        </div>
+      </nb-step>
+      <!-- ---------------------- End Product Specification ---------------------- -->
+
+      <!--? ----------------------- Product Pricing Section ----------------------- -->
+      <nb-step [label]="steps[3]" [stepControl]="priceForm">
+        <div>
+          <form action="" [formGroup]="priceForm">
+            <div class="form-group">
+              <label for="price" class="label">Price</label>
+              <input
+                type="number"
+                formControlName="price"
+                nbInput
+                fullWidth
+                id="price"
+                placeholder="Price"
+                min="0"
+              />
+            </div>
+
+            <!--? error Message --->
+            <div *ngIf="Price.invalid && (Price.dirty || Price.touched)">
+              <nb-alert *ngIf="Price.errors.required" class="error-message"
+                >*Price is required!</nb-alert
+              >
+              <nb-alert *ngIf="Price.errors.min" class="error-message"
+                >*Price min value is 1$!</nb-alert
+              >
+            </div>
+            <!--? error Message --->
+
+            <div class="row">
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label for="discount" class="label">Discount</label>
+                  <input
+                    type="number"
+                    #disc
+                    nbInput
+                    fullWidth
+                    id="discount"
+                    #discount
+                    placeholder="Discount"
+                    min="0"
+                    formControlName="discount"
+                  />
+                </div>
+
+                <!--? error Message --->
+                <div
+                  *ngIf="
+                    Discount.invalid && (Discount.dirty || Discount.touched)
+                  "
+                >
+                  <nb-alert *ngIf="Discount.errors.min" class="error-message"
+                    >*Discount min value is 3%!</nb-alert
+                  >
+                  <nb-alert *ngIf="Discount.errors.max" class="error-message">
+                    *Discount max Value is 90%
+                  </nb-alert>
+                </div>
+                <!--? error Message --->
+              </div>
+
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <div>
+                    <label for="discountDate" class="label"
+                      >Discount Range Date</label
+                    >
+                  </div>
+                  <input
+                    id="datepicker"
+                    nbInput
+                    fullWidth
+                    placeholder="Range Picker"
+                    [nbDatepicker]="rangepicker"
+                    [disabled]="disc.value == 0"
+                  />
+                  <nb-rangepicker
+                    (rangeChange)="handleDateChange($event)"
+                    [min]="min"
+                    [max]="max"
+                    #rangepicker
+                  >
+                  </nb-rangepicker>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div class="d-flex justify-content-center">
+          <button nbButton nbStepperPrevious>prev</button>
+          <button nbButton nbStepperNext>next</button>
+        </div>
+      </nb-step>
+      <!-- --------------------- End Product Pricing Section --------------------- -->
+
+      <!--? --------------------------- Images Section ---------------------------- -->
+      <nb-step [label]="steps[4]" [stepControl]="SelectedImages.length == 0">
+        <div class="flex-wrap mt-4 mb-4 d-flex">
+          <div
+            *ngFor="let item of SelectedImages"
+            [style.backgroundImage]="'url(' + item + ')'"
+            class="shadow img-preview"
+          ></div>
+          <form [formGroup]="ImageForm">
+            <button nbButton class="add-image-btn" (click)="upload.click()">
+              <i class="fas fa-plus"></i>
+              <input
+                formControlName="image"
+                type="file"
+                multiple
+                #upload
+                hidden
+                (change)="onFileSelect($event)"
+              />
+            </button>
+            <div
+              *ngIf="Image.touched && Image.invalid"
+              class="alert alert-danger"
+            >
+              <div *ngIf="Image.errors.required">File is required.</div>
+              <div *ngIf="Image.errors.invalidMimeType">This not Image</div>
+            </div>
+          </form>
+        </div>
+
+        <div class="d-flex justify-content-center">
+          <button nbButton nbStepperPrevious>prev</button>
+          <button nbButton nbStepperNext status="success">Finish</button>
+        </div>
+      </nb-step>
+
+      <!-- ------------------------- End Images Section -------------------------- -->
+
+      <nb-step [stepControl]="true" [hidden]="true" label="Third step">
+        <div class="step-container text-center">
+          <h3>Wizard completed!</h3>
+
+          <!-- stepper.reset() -->
+          <button
+            nbButton
+            status="success"
+            (click)="addProduct(); stepper.reset()"
+          >
+            Add Product
+          </button>
+        </div>
+      </nb-step>
+    </nb-stepper>
+  </nb-card-body>
+</nb-card>
+
+<!-- -------------------- Color Picker Window Template --------------------- -->
+<ng-template #colorPikerPopup>
+  <div class="d-flex justify-content-between">
+    <label for="colorPiker">Choose Color</label>
+    <input
+      nbInput
+      type="color"
+      class="colorPiker"
+      [(ngModel)]="selectedColor"
+    />
+  </div>
+
+  <hr />
+
+  <label>Quick Choice</label>
+  <div class="flex-wrap mt-1 d-flex" id="quickColor">
+    <button
+      *ngFor="let color of quickColorList; let i = index"
+      nbButton
+      class="add-color-btn"
+      [style.backgroundColor]="color"
+      (click)="quickColorHandler(color)"
+    ></button>
+  </div>
+  <div class="mt-5 d-flex justify-content-end">
+    <button
+      nbButton
+      status="danger"
+      [disabled]="Colors.length == 0"
+      class="mr-2"
+      (click)="clearAllColors()"
+    >
+      Clear Colors
+    </button>
+    <button
+      nbButton
+      status="success"
+      [disabled]="selectedColor == null"
+      (click)="addColor()"
+    >
+      Add Color
+    </button>
+  </div>
+</ng-template>

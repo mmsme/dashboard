@@ -1,0 +1,91 @@
+
+.colorCircle, .add-color-btn{
+  height: 4.8ex;
+  width: 4.8ex;
+  border: 3.5px solid #d2dbe9;
+  border-radius: 25px;
+  margin-right: 0.8ex !important;
+  cursor: pointer;
+}
+
+.add-color-btn{
+  background-color: #d2dbe9;
+  margin: 0 !important;
+  border-radius: 25px !important;
+  box-shadow: 0 0 3px rgba(51, 51, 51, 0.418);
+}
+
+
+
+.colorPiker{
+  height: 4.8ex;
+  width: 10ex;
+  padding: 1px !important;
+  margin-left: 3ex;
+}
+
+#quickColor .add-color-btn{
+  margin: 1ex !important;
+}
+
+#quickColor{
+  width: 380px;
+}
+
+
+.add-image-btn{
+  width: 4em;
+  height: 4em;
+  margin: 5.5em 0 !important;
+  margin-right: 2em;
+  border-radius: 4em !important;
+}
+
+.img-preview{
+  height: 10em;
+  width: 10em;
+  margin: 2em;
+  border-radius: 10px;
+  background: url('https://www.fillmurray.com/640/360'),#d2dbe9;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  text-align: end;
+}
+
+.fa-plus{
+  font-size: x-large;
+}
+
+
+.error-message{
+  color: red !important;
+  background-color: transparent !important;
+  padding: 0 !important;
+  margin: 1ex !important;
+}
+
+.badge{
+  border-radius: 5em;
+  background-color: rgba(0, 0, 0, 0.822);
+  color: white;
+  padding: 2.5px 5px;
+  margin: 10px;
+  transform: translate(3ex, -2.5ex);
+  cursor: pointer;
+}
+
+.small-span{
+  padding: 2px 3px;
+  font-size: 5px;
+  transform: translate(6ex, -4.5ex);
+}
+
+.fa-times{
+  font-size: small;
+}
+
+.small-span .fa-times{
+  font-size: 10px;
+}
+

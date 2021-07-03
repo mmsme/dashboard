@@ -1,0 +1,207 @@
+<nb-card>
+  <nb-card-header>
+    <h5>{{ isEdit == false ? "Add Employee" : "Edit Employee" }}</h5>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="container mt-3 mb-3 col-12 col-md-8">
+      <form [formGroup]="form">
+        <div class="row">
+          <div class="form-group col-12 col-md-6">
+            <label for="fname" class="label">First Name</label>
+            <input
+              nbInput
+              fullWidth
+              type="text"
+              class="form-control"
+              name="fname"
+              id="fname"
+              aria-describedby="helpId"
+              placeholder="First Name"
+              formControlName="fname"
+            />
+
+            <!--? error Message --->
+            <div *ngIf="Fname.invalid && (Fname.dirty || Fname.touched)">
+              <nb-alert *ngIf="Fname.errors.required" class="error-message"
+                >*First name is required!</nb-alert
+              >
+              <nb-alert *ngIf="Fname.errors.inputIsSpace" class="error-message">
+                *Product name is invalid!</nb-alert
+              >
+              <nb-alert *ngIf="Fname.errors.minlength" class="error-message"
+                >*First Name should be at least
+                {{ Fname.errors.minlength.requiredLength }} Character
+              </nb-alert>
+              <nb-alert *ngIf="Fname.errors.maxlength" class="error-message">
+                *Product Name should be at most
+                {{ Fname.errors.maxlength.requiredLength }} Character
+              </nb-alert>
+            </div>
+            <!--? error Message --->
+          </div>
+
+          <div class="form-group col-12 col-md-6">
+            <label for="lname" class="label">Last Name</label>
+            <input
+              nbInput
+              fullWidth
+              type="text"
+              class="form-control"
+              name="lname"
+              id="lname"
+              placeholder="Last Name"
+              formControlName="lname"
+            />
+            <!--? error Message --->
+            <div *ngIf="Lname.invalid && (Lname.dirty || Lname.touched)">
+              <nb-alert *ngIf="Lname.errors.required" class="error-message"
+                >*Last name is required!</nb-alert
+              >
+              <nb-alert *ngIf="Lname.errors.inputIsSpace" class="error-message">
+                *Product name is invalid!</nb-alert
+              >
+              <nb-alert *ngIf="Lname.errors.minlength" class="error-message"
+                >*Last Name should be at least
+                {{ Lname.errors.minlength.requiredLength }} Character
+              </nb-alert>
+              <nb-alert *ngIf="Lname.errors.maxlength" class="error-message">
+                *Product Name should be at most
+                {{ Lname.errors.maxlength.requiredLength }} Character
+              </nb-alert>
+            </div>
+            <!--? error Message --->
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email" class="label">Email</label>
+          <input
+            nbInput
+            fullWidth
+            type="email"
+            class="form-control"
+            name="email"
+            id="eamil"
+            aria-describedby="helpId"
+            placeholder="Email"
+            formControlName="email"
+          />
+
+          <!--? error Message --->
+          <div *ngIf="Email.invalid && (Email.dirty || Email.touched)">
+            <nb-alert *ngIf="Email.errors.required" class="error-message"
+              >*Email is required!</nb-alert
+            >
+            <nb-alert *ngIf="Email.errors.inputIsSpace" class="error-message">
+              *Email is invalid!</nb-alert
+            >
+          </div>
+          <!--? error Message --->
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="label">Password</label>
+          <input
+            nbInput
+            fullWidth
+            type="password"
+            class="form-control"
+            name="password"
+            id="password"
+            aria-describedby="helpId"
+            placeholder="Password"
+            formControlName="password"
+          />
+
+          <!--? error Message --->
+          <div *ngIf="Password.invalid && (Password.dirty || Password.touched)">
+            <nb-alert *ngIf="Password.errors.required" class="error-message"
+              >*Password is required!</nb-alert
+            >
+            <nb-alert
+              *ngIf="Password.errors.inputIsSpace"
+              class="error-message"
+            >
+              *Password is invalid!</nb-alert
+            >
+            <nb-alert *ngIf="Password.errors.min" class="error-message"
+              >*Password should be at least
+              {{ Password.errors.min.requiredLength }} Character
+            </nb-alert>
+            <nb-alert *ngIf="Password.errors.max" class="error-message">
+              *Password should be at most
+              {{ Password.errors.maxlength.requiredLength }} Character
+            </nb-alert>
+          </div>
+          <!--? error Message --->
+        </div>
+
+        <div class="row">
+          <div class="form-group col-12 col-sm-6">
+            <label for="address" class="label">Address</label>
+            <input
+              nbInput
+              fullWidth
+              type="text"
+              class="form-control"
+              name="address"
+              id="address"
+              aria-describedby="helpId"
+              placeholder="Address"
+              formControlName="address"
+            />
+
+            <!--? error Message --->
+            <div *ngIf="Address.invalid && (Address.dirty || Address.touched)">
+              <nb-alert *ngIf="Address.errors.required" class="error-message"
+                >*Address is required!</nb-alert
+              >
+            </div>
+            <!--? error Message --->
+          </div>
+
+          <div class="form-group col-12 col-sm-6">
+            <label for="salary" class="label">Salary</label>
+            <input
+              nbInput
+              fullWidth
+              type="number"
+              class="form-control"
+              name="salary"
+              id="salary"
+              aria-describedby="helpId"
+              placeholder="Salary"
+              min="2000"
+              formControlName="salary"
+            />
+
+            <!--? error Message --->
+            <div *ngIf="Salary.invalid && (Salary.dirty || Salary.touched)">
+              <nb-alert *ngIf="Salary.errors.required" class="error-message"
+                >*Stoke is required!</nb-alert
+              >
+              <nb-alert *ngIf="Salary.errors.min" class="error-message"
+                >*Salary min value is 2000!</nb-alert
+              >
+              <nb-alert *ngIf="Salary.errors.max" class="error-message"
+                >*Salary min value is 10000!</nb-alert
+              >
+            </div>
+            <!--? error Message --->
+          </div>
+        </div>
+
+        <button
+          nbButton
+          fullWidth
+          [status]="isEdit == false ? 'success' : 'primary'"
+          class="mt-2"
+          [disabled]="!form.valid"
+          (click)="onClick()"
+        >
+          {{ isEdit == false ? "Add" : "update" }}
+        </button>
+      </form>
+    </div>
+  </nb-card-body>
+</nb-card>

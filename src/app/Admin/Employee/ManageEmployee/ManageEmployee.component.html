@@ -1,0 +1,57 @@
+<nb-card>
+  <nb-card-header class="d-flex justify-content-between align-items-center">
+    <h5>Employees</h5>
+    <button nbButton outline status="success" (click)="onAdd()">Add</button>
+  </nb-card-header>
+  <nb-card-body>
+    <ng2-smart-table
+      [settings]="settings"
+      [source]="source"
+      (deleteConfirm)="onDeleteConfirm($event)"
+      (editConfirm)="onEditConfirm($event, salaryForm)"
+    >
+    </ng2-smart-table>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #salaryForm>
+  <form [formGroup]="form">
+    <div class="form-group">
+      <label class="lable" for="salary">Salary</label>
+      <input
+        type="number"
+        class="form-control"
+        name="salary"
+        id="salary"
+        placeholder="salary"
+        formControlName="salary"
+        nbInput
+        fullWidth
+      />
+    </div>
+
+    <!--? error Message --->
+    <div *ngIf="Salary.invalid && (Salary.dirty || Salary.touched)">
+      <nb-alert *ngIf="Salary.errors.required" class="error-message"
+        >*Stoke is required!</nb-alert
+      >
+      <nb-alert *ngIf="Salary.errors.min" class="error-message"
+        >*Salary min value is {{ Salary.errors.min.min }}!</nb-alert
+      >
+      <nb-alert *ngIf="Salary.errors.max" class="error-message"
+        >*Salary min value is {{ Salary.errors.max.max }}!</nb-alert
+      >
+    </div>
+    <!--? error Message --->
+    <button
+      nbButton
+      fullWidth
+      status="success"
+      type="submit"
+      [disabled]="!form.valid"
+      (click)="editSalary()"
+    >
+      Save
+    </button>
+  </form>
+</ng-template>

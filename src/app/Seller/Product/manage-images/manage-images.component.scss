@@ -1,0 +1,32 @@
+@import "../../../@theme/styles/themes";
+
+@include nb-install-component() {
+  .action-icon {
+    @include nb-ltr(margin-right, -0.5ex);
+    @include nb-rtl(margin-left, -0.5ex);
+  }
+}
+
+.img-view {
+  height: 8em;
+  width: 8em;
+  border-radius: 10px;
+  background: #d2dbe9;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  text-align: end;
+}
+
+.p-img {
+  height: 6em;
+}
+
+.cover {
+  width: 42%;
+  margin-top: 1em ip !important;
+}
+
+.accordion-container {
+  margin-top: 1em !important;
+}
