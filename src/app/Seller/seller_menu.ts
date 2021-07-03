@@ -29,10 +29,10 @@ export const Seller_Menu: NbMenuItem[] = [
         title: "Manage Product",
         link: "/seller/product/manage",
       },
-      {
-        title: "Manage Product Images",
-        link: "/seller/product/images",
-      },
+      // {
+      //   title: "Manage Product Images",
+      //   link: "/seller/product/images",
+      // },
     ],
   },
   {

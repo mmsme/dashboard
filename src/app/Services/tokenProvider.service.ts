@@ -24,4 +24,12 @@ export class TokenProviderService {
 
     return headers;
   }
+
+  getEmployeeToken() {
+    let headers = new HttpHeaders({
+      authorization: "Bearer " + localStorage.getItem("employee"),
+    });
+
+    return headers;
+  }
 }

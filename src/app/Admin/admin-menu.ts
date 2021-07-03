@@ -78,16 +78,16 @@ export const Admin_Menu: NbMenuItem[] = [
       { title: "Manage Governorates", link: "/admin/governorate/manage" },
     ],
   },
-  {
-    title: "Settings",
-    home: true,
-    icon: "settings-2-outline",
-    link: "admin",
-    children: [
-      {
-        title: "profile",
-        link: "/admin/employee/profile",
-      },
-    ],
-  },
+  // {
+  //   title: "Settings",
+  //   home: true,
+  //   icon: "settings-2-outline",
+  //   link: "admin",
+  //   children: [
+  //     {
+  //       title: "profile",
+  //       link: "/admin/employee/profile",
+  //     },
+  //   ],
+  // },
 ];
